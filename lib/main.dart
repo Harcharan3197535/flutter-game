@@ -30,10 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<int> one = [];
-  List<int> two = [];
-  List<int> number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  List<String> number = ["", "", "", "", "", "", "", "", ""];
   int gamer = 0;
+  bool Turn = true;
   TextEditingController gamecontroller = TextEditingController();
 
   @override
@@ -46,7 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {});
+                  },
                   child: Text(
                     "Player One",
                     style: TextStyle(
@@ -81,18 +82,23 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              gamer % 2 == 0 ? one.add(index) : two.add(index);
-              gamer++;
+              _tapped(index);
+              setState(() {});
             },
             child: Card(
-              color: one.contains(index)
-                  ? Colors.yellow
-                  : two.contains(index)
-                      ? Colors.black
-                      : Colors.grey,
+              color: Colors.teal[100],
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text("${index}"),
+                child: Center(
+                  child: Text(
+                    number[index],
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -101,28 +107,27 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _showDialog() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: const Text(
-              "Winner Player 1.",
-              style: TextStyle(
-                color: Colors.teal,
-                fontSize: 20,
-              ),
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    gamecontroller.clear();
-                  },
-                  child: Text("Reset"))
-            ],
-          );
-        });
+  void _tapped(int index) {
+    setState(() {
+      if (Turn && number[index] == '') {
+        number[index] = 'O';
+        gamer++;
+        setState(() {});
+      } else if (!Turn && number[index] == '') {
+        number[index] = 'X';
+        gamer++;
+        setState(() {});
+      }
+
+      Turn = !Turn;
+      _winner();
+    });
+  }
+
+  void _winner() {
+    if (number[0] == number[1] && number[0] == number[2] && number[0] == '') {}
+    if (number[3] == number[4] && number[3] == number[5] && number[3] == '') {}
+    if(number[6] == number[7] && number[6] == number[8] && number[6] == '') {}
   }
 
   showQDailog(int index) {
@@ -130,10 +135,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
+              title: Text("Winner Of The Game."),
               content: const Text(
-                "Winner Player 2.",
+                "",
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Colors.teal,
                   fontSize: 20,
                 ),
               ),
@@ -142,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       Navigator.of(context).pop();
                       controller.clear();
+                      setState(() {});
                     },
                     child: Text("Reset"))
               ],
