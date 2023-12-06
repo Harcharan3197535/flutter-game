@@ -127,45 +127,56 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _checkwinner() {
     if (number[0] == number[1] && number[0] == number[2] && number[0] != '') {
-      _showQDialog(number[0]);
-    }
-    if (number[3] == number[4] && number[3] == number[5] && number[3] != '') {
-      _showQDialog(number[3]);
-    }
-    if (number[6] == number[7] && number[6] == number[8] && number[6] != '') {
-      _showQDialog(number[6]);
+      _showQDialog(winner: number[0]);
+    } else if (number[3] == number[4] &&
+        number[3] == number[5] &&
+        number[3] != '') {
+      _showQDialog(winner: number[3]);
+    } else if (number[6] == number[7] &&
+        number[6] == number[8] &&
+        number[6] != '') {
+      _showQDialog(winner: number[6]);
     }
     //checking column code that win the game.
-    if (number[0] == number[3] && number[0] == number[6] && number[0] != '') {
-      _showQDialog(number[0]);
-    }
-    if (number[1] == number[4] && number[1] == number[7] && number[1] != '') {
-      _showQDialog(number[1]);
-    }
-    if (number[2] == number[5] && number[2] == number[8] && number[2] != '') {
-      _showQDialog(number[2]);
+    else if (number[0] == number[3] &&
+        number[0] == number[6] &&
+        number[0] != '') {
+      _showQDialog(winner: number[0]);
+    } else if (number[1] == number[4] &&
+        number[1] == number[7] &&
+        number[1] != '') {
+      _showQDialog(winner: number[1]);
+    } else if (number[2] == number[5] &&
+        number[2] == number[8] &&
+        number[2] != '') {
+      _showQDialog(winner: number[2]);
     }
     // another code that win the game.
-    if (number[0] == number[4] && number[0] == number[8] && number[0] != '') {
-      _showQDialog(number[0]);
-    }
-    if (number[2] == number[4] && number[2] == number[6] && number[2] != '') {
-      _showQDialog(number[2]);
+    else if (number[0] == number[4] &&
+        number[0] == number[8] &&
+        number[0] != '') {
+      _showQDialog(winner: number[0]);
+    } else if (number[2] == number[4] &&
+        number[2] == number[6] &&
+        number[2] != '') {
+      _showQDialog(winner: number[2]);
     } else if (gamer == 9) {
-     // _showQDialog();
+      _showQDialog();
     }
   }
 
-  void _showQDialog(String winner) {
+  void _showQDialog({String winner = ""}) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              "\" " + winner + " \" is Winner!!!",
+              winner.isEmpty
+                  ? "The Match is Draw."
+                  : "\" " + winner + " \" is Winner!!!",
               style: TextStyle(
                 color: Colors.teal,
-                fontSize: 25,
+                fontSize: 20,
               ),
             ),
             content: Text(
