@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -32,7 +32,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<String> number = ["", "", "", "", "", "", "", "", ""];
   int gamer = 0;
-  bool Turn = true;
+  bool turn = true;
+  int one = 0;
+  int two = 0;
   TextEditingController gamecontroller = TextEditingController();
 
   @override
@@ -109,49 +111,98 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _tapped(int index) {
     setState(() {
-      if (Turn && number[index] == '') {
+      if (turn && number[index] == '') {
         number[index] = 'O';
         gamer++;
         setState(() {});
-      } else if (!Turn && number[index] == '') {
+      } else if (!turn && number[index] == '') {
         number[index] = 'X';
         gamer++;
-        setState(() {});
       }
 
-      Turn = !Turn;
-      _winner();
+      turn = !turn;
+      _checkwinner();
     });
   }
 
-  void _winner() {
-    if (number[0] == number[1] && number[0] == number[2] && number[0] == '') {}
-    if (number[3] == number[4] && number[3] == number[5] && number[3] == '') {}
-    if(number[6] == number[7] && number[6] == number[8] && number[6] == '') {}
+  void _checkwinner() {
+    if (number[0] == number[1] && number[0] == number[2] && number[0] != '') {
+      _showQDialog(number[0]);
+    }
+    if (number[3] == number[4] && number[3] == number[5] && number[3] != '') {
+      _showQDialog(number[3]);
+    }
+    if (number[6] == number[7] && number[6] == number[8] && number[6] != '') {
+      _showQDialog(number[6]);
+    }
+    //checking column code that win the game.
+    if (number[0] == number[3] && number[0] == number[6] && number[0] != '') {
+      _showQDialog(number[0]);
+    }
+    if (number[1] == number[4] && number[1] == number[7] && number[1] != '') {
+      _showQDialog(number[1]);
+    }
+    if (number[2] == number[5] && number[2] == number[8] && number[2] != '') {
+      _showQDialog(number[2]);
+    }
+    // another code that win the game.
+    if (number[0] == number[4] && number[0] == number[8] && number[0] != '') {
+      _showQDialog(number[0]);
+    }
+    if (number[2] == number[4] && number[2] == number[6] && number[2] != '') {
+      _showQDialog(number[2]);
+    } else if (gamer == 9) {
+     // _showQDialog();
+    }
   }
 
-  showQDailog(int index) {
-    var controller = TextEditingController();
-    return showDialog(
+  void _showQDialog(String winner) {
+    showDialog(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text("Winner Of The Game."),
-              content: const Text(
-                "",
-                style: TextStyle(
-                  color: Colors.teal,
-                  fontSize: 20,
-                ),
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "\" " + winner + " \" is Winner!!!",
+              style: TextStyle(
+                color: Colors.teal,
+                fontSize: 25,
               ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      controller.clear();
-                      setState(() {});
-                    },
-                    child: Text("Reset"))
-              ],
-            ));
+            ),
+            content: Text(
+              " The Game Is End Here.",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            actions: [
+              TextButton(
+                  child: Text(
+                    "Reset ",
+                    style: TextStyle(color: Colors.black87),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _clearGameBoard();
+                  }),
+            ],
+          );
+        });
+    if (winner == 'O') {
+      one++;
+    } else if (winner == 'X') {
+      two++;
+    }
+  }
+
+  void _clearGameBoard() {
+    setState(() {
+      one = 0;
+      two = 0;
+      for (int i = 0; i < 9; i++) {
+        number[i] = '';
+      }
+    });
+    gamer = 0;
   }
 }
