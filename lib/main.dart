@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return AlertDialog(
             title: Text(
               winner.isEmpty
-                  ? "The Match is Draw."
+                  ? "The Game is Draw."
                   : "\" " + winner + " \" is Winner!!!",
               style: TextStyle(
                 color: Colors.teal,
