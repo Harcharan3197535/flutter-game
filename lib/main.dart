@@ -172,10 +172,11 @@ class _MyHomePageState extends State<MyHomePage> {
           return AlertDialog(
             title: Text(
               winner.isEmpty
-                  ? "The Game is Draw."
+                  ? "The Game is Draw Here."
                   : "\" " + winner + " \" is Winner!!!",
               style: TextStyle(
                 color: Colors.teal,
+                fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
@@ -190,7 +191,10 @@ class _MyHomePageState extends State<MyHomePage> {
               TextButton(
                   child: Text(
                     "Reset ",
-                    style: TextStyle(color: Colors.black87),
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
