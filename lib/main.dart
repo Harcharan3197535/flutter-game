@@ -1,7 +1,6 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(MyApp());
@@ -185,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
+                color: Colors.red,
               ),
             ),
             actions: [
